@@ -84,14 +84,21 @@ void printLeaderboard(Player* player, Bot bot) {
 
 
 
-
+void printInstructions(){
+  std::string inputInstructions;
+  std::cout << "Would you like to see the game instructions for Go Fish? (Y/N): " << std::endl;
+  std::cin >> inputInstructions;
+  if (inputInstructions == "Y" || inputInstructions == "y"){
+    std::cout << "\nThe following is how the game works You will be the player and face a bot. You will go first and ask the bot for a card, if the bot has the card, you will increase your number of pairs. If the bot does not have the requested card, you will draw a card. This pattern will continue with the player and bot alternating turns until there are no more cards remaining in the deck." << std::endl;
+  }
+}
 int main() {
   std::cout << "Welcome to Go Fish!" << std::endl;
   std::string name;
   std::cout << "What is your name? Enter here: " << std::endl;
   std::cin >> name;
   std::cout << " " << std::endl;
-
+  printIn
   // initialize player
   Player *player = new Player(name);
   // initialize bot
