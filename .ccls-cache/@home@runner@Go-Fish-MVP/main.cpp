@@ -89,13 +89,15 @@ void printInstructions(){
   std::cout << "Would you like to see the game instructions for Go Fish? (Y/N): " << std::endl;
   std::cin >> inputInstructions;
   if (inputInstructions == "Y" || inputInstructions == "y"){
-    std::cout << "\nThe following is how the game works You will be the player and face a bot. You will go first and ask the bot for a card, if the bot has the card, you will increase your number of pairs. If the bot does not have the requested card, you will draw a card. This pattern will continue with the player and bot alternating turns until there are no more cards remaining in the deck. The player with the most pairs at the end will win" << std::endl;
+    std::cout << "\nThe following is how the game works You will be the player and face a bot. You will go first and ask the bot for a card, if the bot has the card, you will increase your number of pairs. If the bot does not have the requested card, you will draw a card. This pattern will continue with the player and bot alternating turns until there are no more cards remaining in the deck. The player with the most pairs at the end will win!" << std::endl;
   }
 }
 int main() {
-  std::cout << "Welcome to Go Fish!" << std::endl;
+  std::cout << "\033[4;1;91mWelcome to Go Fish!\033[0;39m" << std::endl;
+
+  std::cout << std::endl;
   std::string name;
-  std::cout << "What is your name? Enter here: " << std::endl;
+  std::cout << "\033[31mWhat is your name? Enter here: ";
   std::cin >> name;
   std::cout << " " << std::endl;
   printInstructions();
@@ -132,35 +134,35 @@ int main() {
   while (deck.getCards().size() > 0) {
     // player's turn
     player->printDeck();
-    std::cout << "Please select a card to ask for: ";
+    std::cout << "\033[0;32mPlease select a card to ask for: \033[0;39m";
     std::cin >> card;
 
     std::cout << "";
 
     // check if card is in bot's hand
     if (std::find(bot.hand.begin(), bot.hand.end(), card) != bot.hand.end()) {
-      std::cout << "\nYou got a match!" << std::endl;
+      std::cout << "\n\033[1;32mYou got a match!\033[0;39m" << std::endl;
       player->pairs++;
       bot.hand.erase(std::remove(bot.hand.begin(), bot.hand.end(), card),
                      bot.hand.end());
       player->hand.push_back(card);
     } else {
-      std::cout << "\nGo Fish!" << std::endl;
+      std::cout << "\n\033[1;91mGo Fish!\033[0;39m" << std::endl;
       // draw a card from the deck
       if (deck.getCards().size() > 0) {
         int randomIndex = rand() % deck.getCards().size();
-        std::cout << "You drew a " << deck.getCards()[randomIndex] << std::endl;
+        std::cout << "\033[0;36mYou drew a " << deck.getCards()[randomIndex] << "\033[0;39m" << std::endl;
         player->hand.push_back(deck.getCards()[randomIndex]);
         deck.removeCard(deck.getCards()[randomIndex]);
       } else {
-        std::cout << "Deck is empty!" << std::endl;
+        std::cout << "\033[1;31mDeck is empty!\033[0;39m" << std::endl;
       }
 
       // check for pairs in player's hand
       for (int i = 0; i < player->hand.size(); i++) {
         for (int j = i + 1; j < player->hand.size(); j++) {
           if (player->hand[i] == player->hand[j]) {
-            std::cout << "You have a pair of " << player->hand[i] << "s!"
+            std::cout << "\033[1;32mYou have a pair of " << player->hand[i] << "s!\033[0;39m"
                       << std::endl;
             player->pairs++;
             player->hand.erase(player->hand.begin() + j);
@@ -175,15 +177,15 @@ int main() {
 		srand(rand());
     int randomIndex = rand() % bot.hand.size();
     std::string randomCard = bot.hand[randomIndex];
-    std::cout << "\nThe bot asks if you have a " << randomCard << std::endl;
+    std::cout << "\n\033[0;42mThe bot asks if you have a " << randomCard << "\033[0;39m" << std::endl;
 
     if (std::find(player->hand.begin(), player->hand.end(), randomCard) != player->hand.end()) {
-        std::cout << "The bot got a match" << std::endl;
+        std::cout << "\033[0;32mThe bot got a match\033[0;39m" << std::endl;
         bot.pairs++;
         player->hand.erase(std::remove(player->hand.begin(), player->hand.end(), randomCard), player->hand.end());
         bot.hand.push_back(deck.getCards()[randomIndex]);
     } else {
-        std::cout << "There is not a match. The Bot picks up a card." << std::endl;
+        std::cout << "\033[0;32mThere is not a match. The Bot picks up a card.\033[0;39m" << std::endl;
       	srand(rand());  
 				int randomCardIndex = rand() % deck.getCards().size();
         bot.hand.push_back(deck.getCards()[randomCardIndex]);
